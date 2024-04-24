@@ -1,4 +1,7 @@
  requests
  flask
+ pillow
+#hashlib
+ google-cloud-storage
  #pickle
  # -e .
