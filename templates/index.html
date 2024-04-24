@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Input Address{% endblock %}
+
+{% block content %}
+    <h3>Input address</h3>
+    <form method="POST" action="{{ url_for('predict') }}">
+        <input type="text" name="address" placeholder="123 Main St, New York, NY" accept="application/json">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
+<!--Change the form type to json-->
