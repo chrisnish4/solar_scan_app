@@ -1,7 +1,9 @@
  requests
  flask
  pillow
-#hashlib
  google-cloud-storage
+ torch
+ transformers
+#hashlib
  #pickle
  # -e .

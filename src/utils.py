@@ -2,8 +2,9 @@ import requests
 import os
 import sys
 import hashlib
-from exception import CustomException
 from google.cloud import storage
+from exception import CustomException
+
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
