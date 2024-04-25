@@ -1,23 +1,32 @@
+"""
+Handles data ingestion
+"""
 import os
 import sys
 import json
-import requests
-from google.cloud import storage
 
-from exception import CustomException
-from logger import logging
-from utils import *
-from dataclasses import dataclass
+from src.exception import CustomException
+from src.logger import logging
+from src.utils import generate_hash, get_img_temp_path, upload_gcs, read_gcs
 
-@dataclass
 class DataIngestionConfig:
-    tmp_img_path: str = os.path.join('tmp', 'location.png')
+    """
+    Class that loads data from API or GCP bucket
+    """
+    def __init__(self):
+        """
+        Empty init
+        """
 
-class DataIngestion:
-    def __init__(self):#, address):
-        pass
-
-    def initiate_data_ingestion(self, address_list): 
+    def initiate_data_ingestion(self, address_list):
+        """
+        1. Takes a single or list of addresses
+        2. Checks to see if the address has been queried before
+        3a. If has not been queried, pull from Google Maps Static API 
+            and upload to GCP
+        3b. If has been queried, pulls from GCP
+        4. Loads to tmp directory
+        """
         logging.info('Entered the data ingestion method or component')
 
         try:
@@ -29,7 +38,7 @@ class DataIngestion:
 
             with open(hash_addr_path, 'r') as f:
                 json_data = json.load(f)
-           
+
             os.makedirs('tmp', exist_ok=True)
 
             for idx, address in enumerate(address_list):
@@ -38,7 +47,7 @@ class DataIngestion:
                     hash_value = json_data[address]
                     obj_name = f'{hash_value}.png'
                     local_path = os.path.join('tmp', obj_name)
-                   
+
                     read_gcs('ind_uploads', obj_name, local_path)
                     logging.info(f'Image {idx} successfully retrieved')
 
@@ -59,7 +68,7 @@ class DataIngestion:
 
         except Exception as e:
             raise CustomException(e, sys)
-   
-if __name__ == "__main__":
-    obj = DataIngestion()
-    obj.initiate_data_ingestion(['374 Utica Ln, San Jose, CA', '376 Utica Ln, San Jose, CA'])
+
+#if __name__ == "__main__":
+#    obj = DataIngestion()
+#    obj.initiate_data_ingestion(['374 Utica Ln, San Jose, CA', '376 Utica Ln, San Jose, CA'])

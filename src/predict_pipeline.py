@@ -1,12 +1,18 @@
-# remove tmp file
+"""
+Pipeline for generating images with object detection 
+bounding boxes and object detection results from addresses.
+"""
 import os
 import sys
 import torch
 from PIL import Image, ImageDraw
 from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection
-from exception import CustomException
+from src.exception import CustomException
 
 class PredictPipeline:
+    """
+    Predict Pipeline
+    """
     def __init__(self):
         pass
 
@@ -30,7 +36,7 @@ class PredictPipeline:
                 outputs = model(**inputs)
                 target_sizes = torch.tensor([img.size[::-1] for img in images])
                 results = processor.post_process_object_detection(
-                    outputs = model(**inputs),
+                    outputs,
                     threshold = 0.3,
                     target_sizes=target_sizes
                 )
@@ -55,6 +61,10 @@ class PredictPipeline:
             raise CustomException(e, sys)
 
 class CustomData:
+    """
+    From a tmp directory path, creates a list of image objects
+    to be passed to the predict pipeline.
+    """
     def __init__(self, tmp_path):
         """
         From a directory path (where images are stored)
@@ -65,7 +75,10 @@ class CustomData:
             single_image_path = os.path.join(tmp_dir, images[idx])
             self.image_paths.append(single_image_path)
 
-    def get_data(self): 
+    def get_data(self):
+        """
+        Turns list of image paths to list of image objects
+        """
         try:
             images = [Image.open(img).convert('RGB') for img in self.image_paths]
 
@@ -73,6 +86,6 @@ class CustomData:
 
         except Exception as e:
             raise CustomException(e, sys)
-        
+
 #if __name__ == "__main__":
 #    print('hi')

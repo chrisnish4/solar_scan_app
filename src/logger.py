@@ -1,3 +1,6 @@
+"""
+Logging configuration to be human readable.
+"""
 import logging
 import os
 from datetime import datetime
