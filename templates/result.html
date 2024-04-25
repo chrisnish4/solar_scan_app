@@ -6,5 +6,7 @@
 <p>This is the address you input {{ address }}</p>
 <p>Has a pool: {{ has_pool }}</p>
 <p>Has solar panels: {{ has_solar }}</p>
+<p>Image list: {{ check }}</p>
+<img src="{{ url_for('static', filename='img_0.png') }}" alt="House Image">
 <!--<p>Latitude: {{ lat }}, Longitude: {{ lon }}</p>-->
 {% endblock %}

@@ -4,6 +4,7 @@ bounding boxes and object detection results from addresses.
 """
 import os
 import sys
+import shutil
 import torch
 from PIL import Image, ImageDraw
 from transformers import AutoProcessor, AutoModelForZeroShotObjectDetection
@@ -54,8 +55,14 @@ class PredictPipeline:
                     draw.rectangle((xmin, ymin, xmax, ymax), outline="#39ff14", width=2)
                     draw.text((xmin, ymin), f"{queries[label]}: {round(score,2)}", fill="white")
 
-            return images, results
+            os.makedirs('static/', exist_ok=True)
+            for idx, img in enumerate(images):
+                img.save(f'static/img_{idx}.png')
 
+            shutil.rmtree('tmp')
+            
+
+            return images, results
 
         except Exception as e:
             raise CustomException(e, sys)
@@ -71,9 +78,10 @@ class CustomData:
         creates a list of image objects
         """
         self.image_paths = list()
-        for idx, (tmp_dir, _, images) in enumerate(os.walk(tmp_path)):
-            single_image_path = os.path.join(tmp_dir, images[idx])
-            self.image_paths.append(single_image_path)
+        for tmp_dir, _, images in os.walk(tmp_path):
+            for img in images:
+                single_image_path = os.path.join(tmp_dir, img)
+                self.image_paths.append(single_image_path)
 
     def get_data(self):
         """
@@ -88,4 +96,7 @@ class CustomData:
             raise CustomException(e, sys)
 
 #if __name__ == "__main__":
-#    print('hi')
+#    obj = CustomData('../tmp/')
+#    img_list = obj.get_data()
+#    for i in img_list:
+#       print(i)

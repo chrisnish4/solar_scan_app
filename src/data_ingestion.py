@@ -70,5 +70,5 @@ class DataIngestionConfig:
             raise CustomException(e, sys)
 
 #if __name__ == "__main__":
-#    obj = DataIngestion()
+#    obj = DataIngestionConfig()
 #    obj.initiate_data_ingestion(['374 Utica Ln, San Jose, CA', '376 Utica Ln, San Jose, CA'])
