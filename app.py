@@ -14,17 +14,16 @@ def predict_data():
         return render_template('index.html')
     elif request.method == "POST":
         # Get the images
-        address = request.form['address'] ### JSON
+        address = request.form['address'] ### JSON ###########how to deal with this
         data_in = DataIngestionConfig()
         data = data_in.initiate_data_ingestion([address])
 
         # Process the images
         image_dir = 'tmp/'
         cust_data = CustomData(image_dir)
-        image_paths = cust_data.image_paths
         image_list = cust_data.get_data()
         pred_pipe = PredictPipeline()
-        img_output, results_dict = pred_pipe.predict(image_list)
+        _, results_dict = pred_pipe.predict(image_list)
 
         has_solar = list()
         has_pool = list()
@@ -40,7 +39,6 @@ def predict_data():
             address=address,
             has_pool=has_pool,
             has_solar=has_solar,
-            check = image_paths
         )
 
 if __name__ == '__main__':

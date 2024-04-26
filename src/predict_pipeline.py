@@ -28,6 +28,7 @@ class PredictPipeline:
             model = AutoModelForZeroShotObjectDetection.from_pretrained(check_point)
             processor = AutoProcessor.from_pretrained(check_point)
 
+
             # Define objects to identify
             queries = ['solar panel', 'pool']
             inputs = processor(text=queries, images=images, return_tensors='pt')
@@ -60,7 +61,6 @@ class PredictPipeline:
                 img.save(f'static/img_{idx}.png')
 
             shutil.rmtree('tmp')
-            
 
             return images, results
 
