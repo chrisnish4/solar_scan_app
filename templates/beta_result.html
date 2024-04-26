@@ -3,8 +3,8 @@
 {% block title %}Results{% endblock %}
 
 {% block content %}
-    <p>This is the address you input {{ address }}</p>
+    <p>Address: {{ address }}</p>
     <p>Has a pool: {{ has_pool }}</p>
     <p>Has solar panels: {{ has_solar }}</p>
-    <img src="{{ url_for('static', filename='img_0.png') }}" alt="House Image">
+    <img src="{{ file_name }}" alt="House Image">
 {% endblock %}

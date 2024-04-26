@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Input Address{% endblock %}
+
+{% block content %}
+    <h3>Input address</h3>
+    <form method="POST" action="{{ url_for('beta') }}">
+        <fieldset>
+            <label for="address">Address</label>
+            <input type="text" name="address" placeholder="123 Main St, New York, NY">
+            <!--<ul>
+                {% for i in range(5) %}
+                <li>
+                    <label for="address{{ i }}">Address {{ i + 1 }}</label>
+                    <input type="text" name="address{{ i }}" placeholder="123 Main St, New York, NY">
+                </li>
+                {% endfor %}
+            </ul>-->
+            <button type="submit">Submit Addresses</button>
+        </fieldset>
+    </form>
+{% endblock %}
